@@ -15,15 +15,30 @@
       <p class="subtitle">
       Nei grafici sono mostrati i posti occupati in terapia intensiva in Italia per COVID-19.
       </p>
-      <p class="footer">
+      <p>
       Fonte: <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">dati ufficiali Dipartimento Protezione Civile</a>
       </p>
+    </div>
+    <div class="container">
+      <div class="content">
+      <ul>
+        {% for region, plot in data %}
+        <li>
+          <a href="#{{region|lower|replace({' ':'-','.':''})}}">{{ region }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      </div>
+      <br><br>
     </div>
 
   {% for region, plot in data %}
 
     <div class="container">
-      <a name="{{region|lower|replace({' ':'-','.':''})}}"> 
+      <a href="#">(back to top)</a>
+      <br>
+      {% set anchor = region|lower|replace({' ':'-','.':''}) %}
+      <a href="#{{anchor}}" name="{{anchor}}"> 
         <h1 class="title">{{ region }}</h1>
       </a>
       <p class="subtitle" id="plot-{{ loop.index }}">
