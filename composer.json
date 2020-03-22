@@ -1,0 +1,7 @@
+{
+    "name": "channelweb/covid-ita",
+    "description": "COVID 19 graph ITA",
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

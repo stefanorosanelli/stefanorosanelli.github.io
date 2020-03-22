@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COVID-19 Ita</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <section class="section">
+      <div class="container">
+      <h1 class="title">Dati COVID-19 in Italia</h1>
+      <p class="subtitle">
+      Nei grafici sono mostrati i posti occupati in terapia intensiva in Italia per COVID-19.
+      </p>
+      <p class="footer">
+      Fonte: <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">dati ufficiali Dipartimento Protezione Civile</a>
+      </p>
+    </div>
+
+  {% for region, plot in data %}
+
+    <div class="container">
+      <a name="{{region|lower|replace({' ':'-','.':''})}}"> 
+        <h1 class="title">{{ region }}</h1>
+      </a>
+      <p class="subtitle" id="plot-{{ loop.index }}">
+      </p>
+    </div>
+    <script>
+    var data = [{{ plot|json_encode()|raw }}];
+
+    var layout = {
+      title: 'Posti in terapia intensiva COVID-19 ({{region}})',
+    };
+    Plotly.newPlot('plot-{{ loop.index }}', data, layout);
+    </script>
+
+  {% endfor %}
+
+  </section>
+
+</body>
+</html>
