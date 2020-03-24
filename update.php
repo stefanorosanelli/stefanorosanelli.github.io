@@ -29,9 +29,9 @@ foreach ($covid as $region) {
     $data[$k]['y'][] = (int)$region['terapia_intensiva'];    
 }
 
-$out = $twig->render('covid-19-ita.twig', compact('data'));
+$out = $twig->render('icu-covid-19-ita.twig', compact('data'));
 
-$file = ROOT . '/covid-19-ita.html';
+$file = ROOT . '/icu-covid-19-ita.html';
 file_put_contents($file, $out);
 
 ?>
