@@ -19,14 +19,17 @@ $twig = new \Twig\Environment($loader, [
 $covid = json_decode(file_get_contents(ROOT . '/dpc-covid19-ita-regioni.json'), true);
 
 $data = [];
+$start = (string)date('md', strtotime('-1 month'));
 foreach ($covid as $region) {
     $k = $region['denominazione_regione'];
     if (empty($data[$k])) {
         $data[$k]['type'] = 'bar';
     }
-    $d = date_create_from_format('Y-m-d' , substr($region['data'], 0, 10)); 
-    $data[$k]['x'][] = $d->format('M d'); 
-    $data[$k]['y'][] = (int)$region['terapia_intensiva'];    
+    $d = date_create_from_format('Y-m-d' , substr($region['data'], 0, 10));
+    if ($d->format('md') >= $start) {
+        $data[$k]['x'][] = $d->format('M d'); 
+        $data[$k]['y'][] = (int)$region['terapia_intensiva'];    
+    }
 }
 
 $out = $twig->render('icu-covid-19-ita.twig', compact('data'));
